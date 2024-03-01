@@ -133,7 +133,6 @@ app.post(
     listing.reviews.push(newReview);
     await newReview.save();
     await listing.save();
-    console.log("new review saved");
     res.redirect(`/listings/${listing._id}`);
   })
 );
