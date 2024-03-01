@@ -32,6 +32,7 @@ main()
   });
 
 function validateListing(req, res, next) {
+  let { error } = listingSchema.validate(req.body);
   if (error) {
     let errMsg = error.details.map((e) => e.message).join(",");
     throw new ExpressError(400, error);
@@ -43,7 +44,7 @@ function validateListing(req, res, next) {
 function validateReview(req, res, next) {
   let { error } = reviewSchema.validate(req.body);
   if (error) {
-    let errMsg = error.details.map((e) => e.message).join(",");
+    let errMsg = error.details.map((e) => e.message);
     throw new ExpressError(400, error);
   } else {
     next();
@@ -73,7 +74,7 @@ app.get(
   "/listings/:id",
   wrapAsync(async (req, res) => {
     let { id } = req.params;
-    const listing = await Listing.findById(id);
+    const listing = await Listing.findById(id).populate("reviews");
     res.render("listings/show.ejs", { listing });
   })
 );
@@ -127,8 +128,9 @@ app.post(
   validateReview,
   wrapAsync(async (req, res) => {
     let listing = await Listing.findById(req.params.id);
+    console.log();
     let newReview = new Review(req.body.review);
-    listing.reviews.pop(newReview);
+    listing.reviews.push(newReview);
     await newReview.save();
     await listing.save();
     console.log("new review saved");
