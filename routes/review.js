@@ -7,7 +7,6 @@ const wrapAsync = require("../utils/wrapAsync.js");
 const { listingSchema, reviewSchema } = require("../schema.js");
 
 function validateReview(req, res, next) {
-  console.log(req.params.id);
   let { error } = reviewSchema.validate(req.body);
   if (error) {
     let errMsg = error.details.map((e) => e.message);
