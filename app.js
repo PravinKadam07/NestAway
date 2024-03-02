@@ -10,6 +10,7 @@ const ExpressError = require("./utils/ExpressError.js");
 const { listingSchema, reviewSchema } = require("./schema.js");
 const Review = require("./models/review.js");
 const listings = require("./routes/listing.js");
+const reviews = require("./routes/review.js");
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -31,56 +32,13 @@ main()
     console.log(err);
   });
 
-function validateReview(req, res, next) {
-  let { error } = reviewSchema.validate(req.body);
-  if (error) {
-    let errMsg = error.details.map((e) => e.message);
-    throw new ExpressError(400, error);
-  } else {
-    next();
-  }
-}
-
 app.use("/listings", listings);
+app.use("/listings/:id/reviews", reviews);
 
 app.get("/", (req, res) => {
   res.send("welcome");
 });
 
-//review post route
-app.post(
-  "/listings/:id/reviews",
-  validateReview,
-  wrapAsync(async (req, res) => {
-    let listing = await Listing.findById(req.params.id);
-    console.log();
-    let newReview = new Review(req.body.review);
-    listing.reviews.push(newReview);
-    await newReview.save();
-    await listing.save();
-    res.redirect(`/listings/${listing._id}`);
-  })
-);
-
-//delete review route
-app.delete("/listings/:id/reviews/:reviewId", async (req, res) => {
-  let { id, reviewId } = req.params;
-  await Listing.findByIdAndUpdate(id, { $pull: { reviews: reviewId } });
-  await Review.findByIdAndDelete(reviewId);
-  res.redirect(`/listings/${id}`);
-});
-
-// app.get("/testListing", async (req, res) => {
-//   let sample = new Listing({
-//     title: "My Villa",
-//     description: "in front of sea",
-//     price: 1200,
-//     country: "india",
-//   });
-//   await sample.save();
-//   console.log("Add to DB");
-//   res.send("sucessfull");
-// });
 app.all("*", (req, res, next) => {
   next(new ExpressError(404, "Page Not Found!!"));
 });
