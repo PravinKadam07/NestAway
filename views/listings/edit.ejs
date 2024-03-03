@@ -21,12 +21,20 @@
       </div>
       <div class="mb-3">
         <label for="description" class="form-label">Description</label>
-        <textarea
+        <!-- <textarea
           class="form-control"
           name="listing[description]"
           required
-          value="<%=listing.description%>"
-        ></textarea>
+          value=<%=listing.description%>
+        ></textarea> -->
+        <input
+        class="form-control"
+        name="listing[description]"
+        required
+        col="30"
+        row="5"
+        value="<%=listing.description%>"
+      ></input>
         <div class="invalid-feedback">Please provide a short description.</div>
       </div>
       <div class="mb-3">
