@@ -18,7 +18,7 @@ module.exports.showListings = async (req, res) => {
     req.flash("error", "Listing You Requested Dose Not Exist!");
     res.redirect("/listings");
   }
-  console.log(listing);
+
   res.render("listings/show.ejs", { listing });
 };
 
@@ -37,7 +37,7 @@ module.exports.renderEditForm = async (req, res) => {
     req.flash("error", "Listing You Requested Dose Not Exist!");
     res.redirect("/listings");
   }
-  console.log(listing);
+
   res.render("listings/edit.ejs", { listing });
 };
 
@@ -51,7 +51,7 @@ module.exports.updateListing = async (req, res) => {
 module.exports.destroyListing = async (req, res) => {
   const { id } = req.params;
   let deleteListing = await Listing.findByIdAndDelete(id);
-  console.log(deleteListing);
+
   req.flash("success", "Listing Deleted!");
   res.redirect("/listings");
 };
