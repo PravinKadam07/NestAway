@@ -3,6 +3,7 @@ const router = express.Router();
 const User = require("../models/user.js");
 const wrapAsync = require("../utils/wrapAsync.js");
 const passport = require("passport");
+const { saveRedirectUrl } = require("../middleware.js");
 
 //signup
 router.get("/signup", (req, res) => {
@@ -16,9 +17,15 @@ router.post(
       let { username, email, password } = req.body;
       const newUser = new User({ email, username });
       const registerUser = await User.register(newUser, password);
-      req.flash("success", "welcome to Nest_away!");
+
       console.log(registerUser);
-      res.redirect("/listings");
+      req.login(registerUser, (err) => {
+        if (err) {
+          next(err);
+        }
+        req.flash("success", "welcome to Nest_away!");
+        res.redirect("/listings");
+      });
     } catch (e) {
       req.flash("error", e.message);
       res.redirect("/signup");
@@ -32,13 +39,15 @@ router.get("/login", (req, res) => {
 
 router.post(
   "/login",
+  saveRedirectUrl,
   passport.authenticate("local", {
     failureRedirect: "/login",
     failureFlash: true,
   }),
   wrapAsync(async (req, res) => {
     req.flash("success", "Welcome to Nest_Away!");
-    res.redirect("/listings");
+    let redirectUrl = res.locals.redirectUrl || "/listings";
+    res.redirect(redirectUrl);
   })
 );
 
