@@ -3,6 +3,7 @@ body{
  display: flex;
  flex-direction: column;
  min-height: 100vh;
+ background-color: #FBEAEB;
 
 }
 
@@ -25,6 +26,7 @@ body{
 .f-info-links a{
 text-decoration: none;
 color: #222222;
+
 }
 
 .f-info-links a:hover{
@@ -78,7 +80,8 @@ color: #222222;
 }
 .card-img-overlay:hover{
     background-color:white;
-    opacity: 0.2;
+    opacity: 0.1;
+    
 }
 
 .add-btn{

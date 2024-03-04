@@ -18,6 +18,22 @@
     padding: 0.5rem 3rem 0.5rem 3rem;
     font-size: 0.8rem;
   }
+  .user-title {
+    align-items: center;
+    border-radius: 5px;
+    background-color: rgb(245, 244, 244);
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+  .user-title p {
+    margin-bottom: 0px;
+    text-align: top;
+  }
+  .user {
+    width: 1.2rem;
+
+    padding-top: 0.3rem;
+  }
 </style>
 
 <nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
@@ -50,11 +66,18 @@
         </form>
       </div>
       <div class="navbar-nav ms-auto">
-        <a class="nav-link" href="/listings/new">Add your home</a>
+        <%if(currUser){%>
+        <div class="navbar-nav user-title">
+          <i class="fa-regular fa-circle-user user">&nbsp;</i>
+          <p>&nbsp;&nbsp;<%=currUser.username%></p>
+        </div>
+        <%}%>
+        <a class="nav-link" href="/listings/new">Share Your Space</a>
         <%if(!currUser){%>
         <a class="nav-link" href="/signup"><b>Sign up</b></a>
         <a class="nav-link" href="/login"><b>Log in</b></a>
         <%}%> <%if(currUser){%>
+
         <a class="nav-link" href="/logout"><b>Log out </b></a>
         <%}%>
       </div>
