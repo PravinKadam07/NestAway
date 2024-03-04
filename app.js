@@ -45,9 +45,9 @@ const sessionOption = {
   httpOnly: true,
 };
 
-app.get("/", (req, res) => {
-  res.send("welcome");
-});
+// app.get("/", (req, res) => {
+//   res.send("welcome");
+// });
 
 app.use(session(sessionOption));
 app.use(flash());
@@ -69,15 +69,6 @@ app.use((req, res, next) => {
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
 app.use("/", userRouter);
-
-// app.get("/user", async (req, res) => {
-//   let fakeUser = new User({
-//     email: "student2gamil.com",
-//     username: "delta",
-//   });
-//   let re = await User.register(fakeUser, "hello");
-//   res.send(re);
-// });
 
 app.all("*", (req, res, next) => {
   next(new ExpressError(404, "Page Not Found!!"));
