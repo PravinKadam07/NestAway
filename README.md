@@ -17,7 +17,7 @@ NestAway is a web application for property rental management, allowing users to 
 - **Backend:** Node.js
 - **Database:** MongoDB Atlas
 - **Authentication:** authentication library Passport.js
-- **Deployment:** Render (https://nest-away-project.onrender.com)
+- **Deployment:** Render (https://nest-away-project.onrender.com/listings)
 
 ## Setup
 
