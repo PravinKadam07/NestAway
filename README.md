@@ -1,7 +1,7 @@
 # NestAway
 
 NestAway is a web application for property rental management, allowing users to list, view, and manage properties, as well as leave reviews and ratings.
-
+<img src="./title.png">
 ## Features
 
 - **Listings Management:** Users can add, update, and delete property listings.
